@@ -1,14 +1,14 @@
 
 <header class="app-header">
-  <a class="app-header__logo" href="index.html">Canteen MS</a>
+  <a class="app-header__logo" href="#">Canteen MS</a>
   <!-- Sidebar toggle button-->
-  <a class="app-sidebar__toggle" href="#" data-toggle="sidebar" aria-label="Hide Sidebar">
-   <!--  <span class="mdi mdi-format-list-bulleted"></span> -->
+  &nbsp;&nbsp;<a class="app-sidebar__toggle" href="#" data-toggle="sidebar" aria-label="Hide Sidebar">
+    <span class="mdi mdi-format-list-bulleted" style="color: white; font-size: 28px;"></span>
   </a>
   <!-- Navbar Right Menu-->
-  <ul class="app-nav">
+  &nbsp;&nbsp;<ul class="app-nav">
     <!--Notification Menu-->
-    <li class="dropdown"><a class="app-nav__item" href="#" data-toggle="dropdown" aria-label="Open Profile Menu"><span class="mdi mdi-account-plus lg" style="font-size: 20px;"></span>&nbsp;&nbsp;<?php echo $this->session->login;?> </a>
+    <li class="dropdown"><a style="color: white" class="app-nav__item" href="#" data-toggle="dropdown" aria-label="Open Profile Menu"><span class="mdi mdi-account-plus lg" style="font-size: 20px;"></span>&nbsp;&nbsp;<?php echo $this->session->login;?> </a>
       <ul class="dropdown-menu settings-menu dropdown-menu-right">
         <li><a class="dropdown-item" href="page-user.html"><span class="mdi mdi-account-circle"></span>Profile</a></li>
         <?php if($this->session->loggedIn === TRUE) { ?>      
@@ -25,14 +25,11 @@
 <!-- Sidebar menu-->
 <div class="app-sidebar__overlay" data-toggle="sidebar"></div>
 <aside class="app-sidebar">
-  <div class="app-sidebar__user"><img class="app-sidebar__user-avatar" src="https://s3.amazonaws.com/uifaces/faces/twitter/jsa/48.jpg" alt="User Image">
-    <div>
-      <p class="app-sidebar__user-designation">User login</p>
-      <p class="app-sidebar__user-name">&nbsp;&nbsp;<?php echo $this->session->login;?></p>
-    </div>
+  <div class="app-sidebar__user app-menu__label">
+    <a href="<?php echo base_url() ?>Users"><img class="" style="width: 40%; margin-left: 22%; margin-bottom: -10%;" src="<?php echo base_url();?>assets/images/pnc-canteenEnd.png" alt="User Image"></a>
   </div>
   <ul class="app-menu" id="nav">
-    <li><a class="app-menu__item" href="<?php echo base_url(); ?>admin/food/dryFood"><span class="mdi mdi-bowl" style="font-size: 20px;"></span>&nbsp;&nbsp;<span class="app-menu__label">Dry Food</span></a></li>
+    <li><a class="app-menu__item" href="<?php echo base_url(); ?>admin/food/listDish"><span class="mdi mdi-bowl" style="font-size: 20px;"></span>&nbsp;&nbsp;<span class="app-menu__label">List All Dishes</span></a></li>
     <li><a class="app-menu__item" href="<?php echo base_url(); ?>admin/food/waterFood"><span class="mdi mdi-bowl" style="font-size: 20px;"></span>&nbsp;&nbsp;<span class="app-menu__label">Water Food</span></a></li>
 
     <li><a class="app-menu__item" href="<?php echo base_url(); ?>calender/getCalender"><span class="mdi mdi-folder-plus" style="font-size: 20px;"></span>&nbsp;&nbsp;<span class="app-menu__label">Create Menu</span></a></li>
@@ -41,11 +38,14 @@
 
     <li><a class="app-menu__item" href="<?php echo base_url(); ?>admin/food/favouriteFood"><span class="mdi mdi-folder-plus" style="font-size: 20px;"></span>&nbsp;&nbsp;<span class="app-menu__label">Favorit Food</span></a></li>
 
-    <li><a class="app-menu__item" href="<?php echo base_url(); ?>createEvent/getEventCalendar"><span class="mdi mdi-folder-plus" style="font-size: 20px;"></span>&nbsp;&nbsp;<span class="app-menu__label">Staff Event</span></a></li> 
+    <li><a class="app-menu__item" href="<?php echo base_url(); ?>calendar/getEvent"><span class="mdi mdi-folder-plus" style="font-size: 20px;"></span>&nbsp;&nbsp;<span class="app-menu__label">Staff Event</span></a></li> 
 
-    <li><a class="app-menu__item" href="<?php echo base_url(); ?>"><span class="mdi mdi-folder-plus" style="font-size: 20px;"></span>&nbsp;&nbsp;<span class="app-menu__label">Staff Register</span></a></li> 
+    <li><a class="app-menu__item" href="<?php echo base_url(); ?>calendar/getRegister"><span class="mdi mdi-folder-plus" style="font-size: 20px;"></span>&nbsp;&nbsp;<span class="app-menu__label">Staff Register</span></a></li> 
 
-    <li><a class="app-menu__item" href="<?php echo base_url(); ?>"><span class="mdi mdi-folder-plus" style="font-size: 20px;"></span>&nbsp;&nbsp;<span class="app-menu__label">Week and Month dinnner</span></a></li>      
+    <li>
+      <a class="app-menu__item" href="<?php echo base_url(); ?>calendar/getMonthlyEvent"><span class="mdi mdi-folder-plus" style="font-size: 20px;"></span>&nbsp;&nbsp;<span class="app-menu__label">Week and Month dinnner</span></a>
+    </li>      
+
   </ul> 
 </aside>
 
