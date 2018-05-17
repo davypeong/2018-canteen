@@ -1,6 +1,5 @@
 <?php 
 	class c_users extends CI_Controller {
-
 		public function addUsers(){
 			$this->load->view('templates/header');
 			$this->load->view('users/register');

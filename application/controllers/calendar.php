@@ -1,6 +1,7 @@
 
 <?php 
 Class calendar extends CI_Controller{
+
 	// stuff calendar
 	function getStuffCalendar(){
 		$this->load->model('getUserActive');
