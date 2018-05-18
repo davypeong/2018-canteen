@@ -32,6 +32,7 @@ class Connection extends CI_Controller {
 			$this->load->model('users_model');
 			$login = $this->input->post('login');
 			$password = $this->input->post('password');
+
 			if ($this->users_model->checkCredentials($login, $password)) {
 				log_message('debug', 'Received good credentials for user #' . $this->session->userdata('id'));
 				if ($this->session->userdata('last_page') != '') {

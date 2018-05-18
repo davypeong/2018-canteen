@@ -195,7 +195,6 @@ class food extends CI_Controller {
         $food_ids = $this->input->post('fo_id');
         $quantities = $this->input->post('plate');
 
-
         // let loop the quantiy for each food to get only quantiy != 0
         for($i = 0; $i<count($quantities); $i++)
         {
@@ -210,7 +209,6 @@ class food extends CI_Controller {
             }
         }
         // do something after insert to DB
-  
     }
 
     function createMenu(){
@@ -225,14 +223,26 @@ class food extends CI_Controller {
     }
     
 
- public function selectDish() {
-    $id = $this->uri->segment(4);
-    $data['select_dishes'] = $this->Dishes_model->selectDish($id);
-    $data['title'] = 'List of Dishes';
-    $data['activeLink'] = 'users';
-    $this->load->view('templates/header');
-    $this->load->view('menu/admin_dasboard');
-    $this->load->view('dishes/updateDish', $data);
-    $this->load->view('templates/footer');
+    public function selectDish() {
+        $id = $this->uri->segment(4);
+        $data['select_dishes'] = $this->Dishes_model->selectDish($id);
+        $data['title'] = 'List of Dishes';
+        $data['activeLink'] = 'users';
+        $this->load->view('templates/header');
+        $this->load->view('menu/admin_dasboard');
+        $this->load->view('dishes/updateDish', $data);
+        $this->load->view('templates/footer');
         }
+    public function interestFood(){
+
+        $userId = $this->session->userdata('id');
+        // var_dump($userId); die();
+        $data['userid'] = $this->Dishes_model->storeInterest($userId);
+        $this->load->model('getUserActive');
+        $data['user'] = $this->getUserActive->getActive();
+        $data['dishesOrder'] = $this->Dishes_model->getMenu();  
+        $data['page'] = 'welcome';
+        $this->load->view('layout', $data);
+
+    }
 }

@@ -26,7 +26,7 @@
 				    		<div class="row">
 				    			 <?php if($this->session->loggedIn === TRUE) { ?>
 				    			<div class="col-md-4">
-				    				<a href="#" >45&nbsp; <i class="mdi mdi-thumb-up "></i>&nbsp; Interest</a>
+				    				<a href="#" name="view" value="view" id="<?php echo $dish->dish_id?>" class="interest">45&nbsp; <i class="mdi mdi-thumb-up "></i>&nbsp; Interest</a>
 				    			</div>				    			
 						    	<div class="col-md-4 item" id="food">
 						    		 <a href="#" name="view" value="view" id="<?php echo $dish->dish_id?>" class=" view_data"><i class="mdi mdi-rice "></i>Order</a>	
@@ -82,7 +82,21 @@
                 }  
            });  
       });  
- });  
+        $('.interest').click(function(){
+      		var dish_id = $(this).attr("id");
+      		// alert("Hello my good job!!!!");
+			// $(this).addClass('active').siblings().removeClass('active');
+      		$.ajax({  
+
+	                url:"<?php echo base_url() ?>admin/food/interestFood", 
+	                method:"post",  
+	                data:{dish_id:dish_id}, 
+	                // success:function(data){ 
+		            //  $("#data").html(data);
+		           	//  $('#dataModal').modal("show");
+                }  
+           });  
+      });
 </script>
 
      
