@@ -47,7 +47,7 @@ Class addDish extends CI_Controller{
 		$this->load->helper(array('form', 'url'));	
 		// $data = array('upload_data' => $this->upload->data());         
 		// $imageName = $this->upload->data()['file_name'];
-		
+
 		$data['upload_data'] = $this->upload->data();
         $this->resize($data['upload_data']['upload_path'], $data['upload_data']['file_name']);
         $imageName = $data['upload_data']['file_name'];

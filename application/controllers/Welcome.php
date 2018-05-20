@@ -20,11 +20,11 @@ class Welcome extends CI_Controller {
 	}
 
 	public function getDish(){
-$this->load->model('getUserActive');
-    $data['user'] = $this->getUserActive->getActive();
-$id = $this->input->post('dish_id');
+	$this->load->model('getUserActive');
+	$data['user'] = $this->getUserActive->getActive();
+	$id = $this->input->post('dish_id');
     $data['dishesOrder'] = $this->Dishes_model->selectDish($id);
-    $output = "";	
+	$output = "";
 		foreach ($data['dishesOrder'] as $dish) 
 		{	
 			$output .= '
