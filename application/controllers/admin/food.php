@@ -227,14 +227,15 @@ class food extends CI_Controller {
     }
     
 
- public function selectDish() {
-    $id = $this->uri->segment(4);
-    $data['select_dishes'] = $this->Dishes_model->selectDish($id);
-    $data['title'] = 'List of Dishes';
-    $data['activeLink'] = 'users';
-    $this->load->view('templates/header');
-    $this->load->view('menu/admin_dasboard');
-    $this->load->view('dishes/updateDish', $data);
-    $this->load->view('templates/footer');
-}
+     public function selectDish() {
+        $id = $this->uri->segment(4);
+        $data['select_dishes'] = $this->Dishes_model->selectDish($id);
+        $data['title'] = 'List of Dishes';
+        $data['activeLink'] = 'users';
+        $this->load->view('templates/header');
+        $this->load->view('menu/admin_dasboard');
+        $this->load->view('dishes/updateDish', $data);
+        $this->load->view('templates/footer');
+    }
+    
 }

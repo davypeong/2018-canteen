@@ -33,7 +33,6 @@ class Dishes_model extends CI_Model {
         return $query->result();
     }
 
-
     /**
      * Get the meal time of tbl_dishes 
      * @param int $id optional id of one user
@@ -83,11 +82,7 @@ class Dishes_model extends CI_Model {
         return $password;
     }
 
-    /**
-     * Update a given user in the database. Update data are coming from an HTML form
-     * @return int number of affected rows
-     * @author Benjamin BALET <benjamin.balet@gmail.com>
-     */
+   
 
 public function selectDish($id){
      $query = $this->db->get_where('tbl_dishes', array('dish_id' => $id));
@@ -143,8 +138,8 @@ public function selectDish($id){
 public  function  selectOrder($food_id){
         date_default_timezone_set("Asia/Phnom_Penh");
         $creating_date = date('Y-m-d');
-       $this->db->select('*');
-       $this->db->from('tbl_dishes');
+        $this->db->select('*');
+        $this->db->from('tbl_dishes');
         $this->db->where (array('dish_active' =>1));
         $this->db->where (array('dish_id' =>$food_id));
         $this->db->where('menu_created_date=',$creating_date);
@@ -201,5 +196,29 @@ public  function  selectOrder($food_id){
       $this->db->group_by('userName'); 
       $query = $this->db->get();
       return $query->result();
+    }
+    public function getStoreInterest($user_id, $dish_id){
+        $interesData = array(
+          'store_rate' => "1",
+          'dish_id' => $dish_id,
+          'user_id' => $user_id,
+        );
+        $this->db->insert('tbl_rates', $interesData);
+
+        // $this->db->select(count('user_id'));
+        // $this->db->from('tbl_rates');
+        // $this->db->where (array('dish_id' =>$dish_id));
+        // $query = $this->db->get();
+        // $result= $query->result();
+      
+        // $interestDish = array(
+        //    'current_interest'   => $result
+        // );
+        // $this->db->where('dish_id', $dish_id);
+        // $this->db->update('tbl_dishes ', $interestDish); 
+    }
+    public function getStoreUninterest($user_id){
+        $this->db->where('user_id', $user_id);
+        $this->db->delete(' tbl_rates');
     }
 }

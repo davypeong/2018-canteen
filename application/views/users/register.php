@@ -1,4 +1,4 @@
-
+<script src="<?php echo base_url();?>assets/js/bootbox-4.4.0.min.js"></script>
 <style>
   body {
     background: linear-gradient(45deg, rgba(255,255,255, 0.2), 
@@ -12,6 +12,7 @@
   }
 </style>
 <div class="container">
+  <h1 class="text-center text-warning" id="success-ms"></h1>
     <img src="<?php echo base_url();?>assets/images/pnc-canteenEnd.png" alt="canteen-logo" id="canteen-logo" class="text-center">
     <div class="row">
       <div class="col-sm-1"></div>
@@ -57,7 +58,7 @@
                 </div>
                 <div class="form-group col">
                   <label for="image"><strong>Student Picture</strong></label>
-                  <input type="file" class="form-control" required name="image">
+                  <input type="file" class="form-control" name="image">
                   <p class="text-warning"><?php echo $error_msg ?></p>
                 </div>
               </div>
@@ -66,8 +67,8 @@
                 <input type="radio" name="gender" value="Male" checked> Male
                 <input type="radio" name="gender" value="Female"> Female
               </div>
-              <button class=" btn btn-danger" onclick="goBack()"><i class="mdi mdi-cancel"></i>&nbsp;Cancel</button>
-              <button class=" btn btn-info float-right" type="submit"><i class="mdi mdi-account-plus"></i>&nbsp;Register</button>
+              <a href="<?php echo base_url() ?>" class=" btn btn-danger text-white"><i class="mdi mdi-cancel"></i>&nbsp;Cancel</a>
+              <button class="btn btn-info float-right register" type="submit"><i class="mdi mdi-account-plus"></i>&nbsp;Register</button>
             </form>
             </form>
           </div>
@@ -79,16 +80,13 @@
 </div> <!-- /container -->
 
 <script>
-    $(function(){
-      $('.form-control').keypress(function(event) {
-          if (event.keyCode == 13 || event.which == 13) {
-              $('#formLogin').submit();
-              }
-          });
-    });
-
-  function goBack() {
-    window.history.back();
-}
-
+  $(document).ready(function(){  
+   // $('#success-ms').hide();
+   // <?php if($this->session->flashdata('msg')){ ?>
+   // $('#success-ms').show();
+   $('.btn').html('Department add successfully').fadeIn().delay(4000).fadeOut('slow');
+   // $('#success-ms').html('<?php echo $this->session->flashdata('msg'); ?>').show();
+   });
+   // <?php } ?> 
+  });  
 </script>

@@ -68,7 +68,7 @@
                 <input type="radio" name="gender" value="Male" checked> Male
                 <input type="radio" name="gender" value="Female"> Female
               </div>
-              <button class=" btn btn-danger" onclick="goBack()"><i class="mdi mdi-cancel"></i>&nbsp;Cancel</button>
+              <a class=" btn btn-danger" href="<?php echo base_url() ?>admin/User/listUsers"><i class="mdi mdi-cancel"></i>&nbsp;Cancel</a>
               <button class=" btn btn-warning float-right" type="submit"><i class="mdi mdi-account-plus"></i>&nbsp;Add Staff</button>
             </form>
             </form>

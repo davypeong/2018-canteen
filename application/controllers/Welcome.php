@@ -6,23 +6,32 @@ class Welcome extends CI_Controller {
 	//Default constructor
 	function __construct()
 	{
-			parent::__construct();
-			log_message('debug', 'URI=' . $this->uri->uri_string());
+		parent::__construct();
+		log_message('debug', 'URI='.$this->uri->uri_string());
 	}
-
 	public function index()
 	{
-	$this->load->model('getUserActive');
+	    $this->load->model('getUserActive');
     	$data['user'] = $this->getUserActive->getActive();
     	$data['dishesOrder'] = $this->Dishes_model->getMenu();	
 		$data['page'] = 'welcome';
 		$this->load->view('layout', $data);
 	}
+	public function storeInterest(){
+        $user_id = $this->session->userdata('id');
+        $food_id = $this->input->post('dish_id');
+        $this->Dishes_model->getStoreInterest($user_id, $food_id );
+    }
+    public function storeUninterest(){
+    	$user_id = $this->session->userdata('id');
+        $this->Dishes_model->getStoreUninterest($user_id);
+
+    }
 
 	public function getDish(){
-$this->load->model('getUserActive');
+	$this->load->model('getUserActive');
     $data['user'] = $this->getUserActive->getActive();
-$id = $this->input->post('dish_id');
+	$id = $this->input->post('dish_id');
     $data['dishesOrder'] = $this->Dishes_model->selectDish($id);
     $output = "";	
 		foreach ($data['dishesOrder'] as $dish) 
@@ -64,7 +73,8 @@ $id = $this->input->post('dish_id');
 		echo $output;
 	}
 
-	public function comment(){
+	// public function comment(){
 		
-	}
+	// }
+
 }
