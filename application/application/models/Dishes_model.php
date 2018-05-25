@@ -1,9 +1,9 @@
 <?php
 /**
  * This model contains the business logic and manages the persistence of tbl_dishes and tbl_roles
- * @copyright  Copyright (c) 2018 Benjamin BALET
+ * @copyright  Copyright (c) 2018 khai HOK
  * @license    http://opensource.org/licenses/AGPL-3.0 AGPL-3.0
- * @link       https://github.com/bbalet/skeleton
+ * @link       https://github.com/khaihok/2018-canteen
  * @since      1.0.0
  */
 
@@ -25,12 +25,13 @@ class Dishes_model extends CI_Model {
      * Get the list of tbl_dishes or one user
      * @param int $id optional id of one user
      * @return array record of tbl_dishes
-     * @author chantha roeurn <chantha.roeurn@gmail.com>
+     * @author Benjamin BALET <benjamin.balet@gmail.com>
      */
     public function getDishes() {
         $this->db->order_by('dish_id', 'DESC');
         $query = $this->db->get('tbl_dishes'); 
         return $query->result();
+        // return $order->result();
     }
    /**
      * This function is use to inseret interes data into tbl_rates..
@@ -43,14 +44,21 @@ class Dishes_model extends CI_Model {
           'dish_id' => $dish_id,
           'user_id' => $user_id
         );
-        $this->db->insert('tbl_rates', $interesData); 
+        $this->db->insert('tbl_rates', $interesData);
+
+        // $this->db->select(count('user_id'));
+        // $this->db->from('tbl_rates');
+        // $this->db->where (array('dish_id' =>$dish_id));
+        // $query = $this->db->get();
+        // $result= $query->result();
+      
+        // $interestDish = array(
+        //    'current_interest'   => $result
+        // );
+        // $this->db->where('dish_id', $dish_id);
+        // $this->db->update('tbl_dishes ', $interestDish); 
     }
-     /**
-     * selectAndStoreInterest function is use to select count from tbl_rates and update in tbl_dish.
-     * @return array record of tbl_rates
-     * @author Davy PEONG <davy.peong@student.passerellesnumerique.org>
-     */
-    public function selectAndStoreInterest($dish_id){
+    public function selectInterest($dish_id){
 
         $query = $this->db->query("SELECT COUNT(user_id) AS countUser FROM tbl_rates WHERE dish_id = '".$dish_id."'");  
         $interestData =  $query->result();
@@ -64,6 +72,25 @@ class Dishes_model extends CI_Model {
             );
             $this->db->where('dish_id', $dish_id);
             return $this->db->update('tbl_dishes ', $updateData); 
+    }
+
+    public function updateInterest($dish_id ,$interestData){
+
+        $this->db->query('UPDATE tbl_dishes SET current_interest = "'.$interestData.'" WHERE dish_id = "'.$dish_id.'"');
+        // $updateData = array(
+        //    'user_name'=> $data[''] 
+        // );
+        // $this->db->where('email', $array['email']);
+        // $this->db->update('user', $updateData);
+
+        // $interestDish = array(
+        //    // 'interest' => 'interes' + $interestData
+        //    'current_interest' => $interestData
+        // );
+        // $this->db->where('dish_id', $dish_id);
+        // $this->db->update('tbl_dishes ', $interestDish); 
+
+       
     }
     /**
      * This function is use to delete data from tbl_rates. 
@@ -86,31 +113,28 @@ class Dishes_model extends CI_Model {
     }
 
     /**
-     * Delete a user from the database
+     * Delete a dishes from the database
      * @param int $id identifier of the user
-     * @author Benjamin BALET <benjamin.balet@gmail.com>
+     * @author Davy Peong <davy.peong@student.passerellesnumreriqes.org>
      */
     public function deleteDishes($id) {
         $this->db->delete('tbl_dishes', array('dish_id' => $id));
     }
 
     /**
-     * Insert a new user into the database. Inserted data are coming from an HTML form
-     * @return string deciphered password (so as to send it by e-mail in clear)
-     * @author Benjamin BALET <benjamin.balet@gmail.com>
+      * set_dish from database with image
+     * @author Chantha ROEURN <chantha.roeurn@student.passerellesnumeriques.org>
      */
+    
     public function setDishes() {
         //Hash the clear password using bcrypt (8 iterations)
         $password = $this->input->post('password');
         $salt = '$2a$08$' . substr(strtr(base64_encode($this->getRandomBytes(16)), '+', '.'), 0, 22) . '$';
         $hash = crypt($password, $salt);
-
-        //Role field is a binary mask
         $role = 0;
         foreach($this->input->post("role") as $role_bit){
             $role = $role | $role_bit;
         }
-
         $data = array(
             'firstname' => $this->input->post('firstname'),
             'lastname' => $this->input->post('lastname'),
@@ -124,9 +148,8 @@ class Dishes_model extends CI_Model {
     }
 
     /**
-     * Update a given user in the database. Update data are coming from an HTML form
-     * @return int number of affected rows
-     * @author Benjamin BALET <benjamin.balet@gmail.com>
+      *  from database with image
+     * @author Chantha ROEURN <chantha.roeurn@student.passerellesnumeriques.org>
      */
 
 public function selectDish($id){
@@ -170,19 +193,32 @@ public function selectDish($id){
         $this->db->insert("tbl_dishes", $data);
     }
 
-    public function getMenu($number){
+    /**
+     * Get the info from tbl_dishes where dishes match with breakfast 
+     * @param int $id optional id of one dish.
+     * @return array record of tbl_dishes
+     * @author khai.hok <khai.hok@student.passerellesnumeriques.org>
+     */
+    public function getMenu(){
         date_default_timezone_set("Asia/Phnom_Penh");
         $creating_date = date('Y-m-d');
        $this->db->select('*');
        $this->db->from('tbl_dishes');
         $this->db->where (array('dish_active' =>1));
         $this->db->where('menu_created_date=',$creating_date);
-        $this->db->where('meal_time_id=', $number);
+        $this->db->where('meal_time_id=',1);
         $query = $this->db->get();
-        return $query;
+        return $query->result();
     }
-    
-    /*public function getMenu1(){
+
+
+    /**
+     * Get the info from tbl_dishes where dishes match with Lunch. 
+     * @param int $id optional id of one dish.
+     * @return array record of tbl_dishes
+     * @author khai.hok <khai.hok@student.passerellesnumeriques.org>
+     */
+    public function getMenu1(){
         date_default_timezone_set("Asia/Phnom_Penh");
         $creating_date = date('Y-m-d');
        $this->db->select('*');
@@ -193,7 +229,12 @@ public function selectDish($id){
         $query = $this->db->get();
         return $query->result();
     }
-    
+    /**
+     * Get the info from tbl_dishes where dishes match with dinner. 
+     * @param int $id optional id of one dish.
+     * @return array record of tbl_dishes
+     * @author khai.hok <khai.hok@student.passerellesnumeriques.org>
+     */
     public function getMenu2(){
         date_default_timezone_set("Asia/Phnom_Penh");
         $creating_date = date('Y-m-d');
@@ -205,7 +246,6 @@ public function selectDish($id){
         $query = $this->db->get();
         return $query->result();
     }
-    */
 public  function  selectOrder($food_id){
         date_default_timezone_set("Asia/Phnom_Penh");
         $creating_date = date('Y-m-d');
@@ -241,10 +281,7 @@ public  function  selectOrder($food_id){
         );
         $result = $this->db->insert('tbl_dish_user', $data_dish);
     }
-    /**
-    * Get all the food which are already ordered
-    * @author kimsoeng kao <kimsoeng.kao@student.passerellesnumeriques.org>
-    */
+
     public function preOrderList()
     {
       $this->db->select('orders.*,dishes.dish_name as dishName,sum(orders.quantity) as TotalQuantity,sum(orders.quantity)*1000 as TotalPayment');
@@ -252,6 +289,22 @@ public  function  selectOrder($food_id){
       $this->db->join('tbl_dish_user as dishUsers', 'orders.order_id = dishUsers.order_id');
       $this->db->join('tbl_dishes dishes', 'dishes.dish_id = dishUsers.dish_id');
       $this->db->group_by('dishName'); 
+      $query = $this->db->get();
+      return $query->result();
+    }
+
+    public function userOrderList(){
+      $this->db->select('users.card_id as userId,
+                    CONCAT(users.firstname," ",users.lastname) AS userName,
+                    users.class_name,
+                    dishes.dish_name as dishName,
+                    sum(orders.quantity) as totalQuanttiy,
+                    sum(orders.quantity)*1000 as TotalPayment');
+      $this->db->from('tbl_order as orders');
+      $this->db->join('tbl_dish_user as dishUsers', 'orders.order_id = dishUsers.order_id') ;
+      $this->db->join('tbl_dishes dishes', 'dishes.dish_id = dishUsers.dish_id');
+      $this->db->join('tbl_users users', 'users.id = dishUsers.user_id');
+      $this->db->group_by('userName'); 
       $query = $this->db->get();
       return $query->result();
     }
@@ -267,40 +320,4 @@ public  function  selectOrder($food_id){
         }
         
     }
-     // Check if user already order dish
-    function checkIfUserOrderDish($dish_id, $user_id)
-    {
-        $this->db->where('dish_id', $dish_id);
-        $this->db->where('user_id', $user_id);
-        $result = $this->db->get('tbl_dish_user');
-        if($result->num_rows() > 0)
-        {
-          return true; // return true if user alreay order that dish
-        }else{
-          return false; // return false if user not yet order
-        }
-    }
-    // Get user dish order to edit
-    function selectDishEdit($dish_id, $user_id)
-    {
-       $this->db->where('tbl_dish_user.dish_id', $dish_id);
-        $this->db->where('tbl_dish_user.user_id', $user_id);
-        $this->db->join('tbl_dish_user', 'tbl_dishes.dish_id = tbl_dish_user.dish_id');
-        $this->db->join('tbl_order', 'tbl_order.order_id = tbl_dish_user.order_id'); // join to get the quantity in tbl order
-        $result = $this->db->get('tbl_dishes');      
-        return $result->result();
-    }
-    
-    // Update order info
-    function updateOrderInfo($order_id)
-    {
-      $qty = $this->input->post('quantity'); // get qty from edit form popup
-
-      return $this->db->where('order_id', $order_id)
-      ->update('tbl_order', array('quantity'=> $qty));
-    }
-
-
-
-
 }

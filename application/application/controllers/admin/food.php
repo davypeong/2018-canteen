@@ -17,34 +17,37 @@ class food extends CI_Controller {
      * @author kimsoeng kao <kimsoeng.kao@student.passerellesnumeriques.org>
      */
     public function __construct() {
-        parent::__construct();
-        log_message('debug', 'URI=' . $this->uri->uri_string());
-        $this->session->set_userdata('last_page', $this->uri->uri_string());
-        if($this->session->loggedIn === TRUE) {
-           // Allowed methods
-         if ($this->session->isAdmin || $this->session->isSuperAdmin) {
-             //User management is reserved to admins and super admins
-         }else {
-           redirect('welcome');
-       }
-   } else {
-     redirect('connection/login');
- }
- $this->load->model('users_model');
-}
+            parent::__construct();
+            log_message('debug', 'URI=' . $this->uri->uri_string());
+            $this->session->set_userdata('last_page', $this->uri->uri_string());
+            if($this->session->loggedIn === TRUE) {
+               // Allowed methods
+             if ($this->session->isAdmin || $this->session->isSuperAdmin) {
+                 //User management is reserved to admins and super admins
+             }else {
+                   redirect('welcome');
+               }
+             }  else {
+             redirect('connection/login');
+        }
+          $this->load->model('users_model');
+    }
     /**
-     * storeInterest function is use insert and slecet data from tbl_rates after update into tbl_dish. 
-     * @param to insert , select and update with user_id and dish_id condition.
-     * @return Nothing to return it just do the process in model.
+     * Use to inseret into tbl_rate and update to tbl_dishes.
+     * @param int $id can lesect one or multiple dishes to update.
+     * @return array record of tbl_rate.
      * @author davy peong <davy.peong.passerellesnumeriques.org>
-     */
+     */ 
     public function storeInterest(){
         $this->load->model('Dishes_model');
         $user_id = $this->session->userdata('id');
         $dish_id = $this->input->post('dish_id');
 
         $this->Dishes_model->getStoreInterest($user_id, $dish_id);
-        $this->Dishes_model->selectAndStoreInterest($dish_id);
+        $interestData['intdata'] = $this->Dishes_model->selectInterest($dish_id);
+        // var_dump($interestData['intdata']);die();
+        
+        // $this->Dishes_model->updateInterest($dish_id ,$interestData);
     }
     /**
      * Get the delte number of rate from tbl_rate 
@@ -57,6 +60,10 @@ class food extends CI_Controller {
         $this->Dishes_model->getStoreUninterest($user_id);
 
     }
+    /**
+     * Display all the dishes in dashboard admin
+     * @author kimsoeng kao <kimsoeng.kao@student.passerellesnumeriques.org>
+     */
     public function index() {
         $this->load->helper('form');
         $this->load->model('Dishes_model');
