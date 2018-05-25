@@ -67,7 +67,7 @@ class Dishes_model extends CI_Model {
     }
     /**
      * This function is use to delete data from tbl_rates. 
-     * @return array record of tbl_rates
+     * @return Have no return, it just delete on tbl_rates.
      * @author Davy PEONG <davy.peong@student.passerellesnumerique.org>
      */
     public function getStoreUninterest($user_id , $dish_id){
